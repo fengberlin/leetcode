@@ -51,6 +51,7 @@ func maxSubArray1(nums []int) int {
 }
 
 // 解法三：分而治之，数组按中心点分成两个区间，最大子数组要么出现在数组左边，要么是右边，或者横跨这两个区间
+// 时间复杂度为O(nlogn)，跨越两个区间的区间包含子区间[mid , mid+1]，即nums[mid]与nums[mid+1]一定会被选取。
 // note：https://leetcode-cn.com/problems/maximum-subarray/solution/zui-da-zi-xu-he-cshi-xian-si-chong-jie-fa-bao-li-f/
 func maxSubArray2(nums []int) int {
 	return maxSubArrayDivide(nums, 0, len(nums)-1)
@@ -65,6 +66,7 @@ func maxSubArrayDivide(nums []int, left int, right int) int {
 
 	leftCrossMaxSum := math.MinInt64
 	leftCrossSum := 0
+	// 从mid开始保证能选取nums[mid]，不能从left开始
 	for i := mid; i >= left; i-- {
 		leftCrossSum += nums[i]
 		leftCrossMaxSum = max(leftCrossMaxSum, leftCrossSum)
